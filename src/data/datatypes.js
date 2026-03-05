@@ -1,4 +1,5 @@
 import { strHasQuotes } from "../utils/utils";
+import { isValidMyPrimeTypeDefault } from "../utils/validateMyPrimeType.js";
 import {
   binaryColor,
   booleanColor,
@@ -18,7 +19,6 @@ import { DB } from "./constants";
 const intRegex = /^-?\d*$/;
 const doubleRegex = /^-?\d*.?\d+$/;
 const binaryRegex = /^[01]+$/;
-const myPrimeTypeRegex = /^(?:[1-9]\d*)$/;
 
 /* eslint-disable no-unused-vars */
 const defaultTypesBase = {
@@ -59,10 +59,7 @@ const defaultTypesBase = {
     type: "MYPRIMETYPE",
     color: intColor,
     checkDefault: (field) => {
-      return (
-        myPrimeTypeRegex.test(field.default) &&
-        Number.parseInt(field.default, 10) % 2 === 1
-      );
+      return isValidMyPrimeTypeDefault(field.default);
     },
     hasCheck: true,
     isSized: false,
